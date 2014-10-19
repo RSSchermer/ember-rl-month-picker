@@ -2,10 +2,19 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'dummy',
+    modulePrefix: 'month-picker-demo-app',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
+    contentSecurityPolicy: {
+      'default-src': "'none'",
+      'script-src': "'self' 'unsafe-eval'",
+      'font-src': "'self' https://maxcdn.bootstrapcdn.com",
+      'connect-src': "'self'",
+      'img-src': "'self'",
+      'style-src': "'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com",
+      'media-src': "'self'"
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -40,7 +49,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.baseURL = '/ember-rl-month-picker';
   }
 
   return ENV;
