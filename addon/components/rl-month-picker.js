@@ -3,6 +3,8 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['rl-month-picker', 'rl-picker'],
 
+  classNameBindings: ['isExpanded:expanded'],
+
   year: null,
 
   monthNumber: null,
@@ -28,7 +30,7 @@ export default Ember.Component.extend({
   isExpanded: false,
 
   yearPickerMode: function () {
-    return this.get('year') === null;
+    return !this.get('year');
   }.property(),
 
   pickerVisible: function () {
