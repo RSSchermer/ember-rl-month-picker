@@ -54,12 +54,12 @@ export default Ember.Component.extend({
 
         monthNumber: index + 1,
 
-        isActive: index + 1 === self.get('monthNumber')
+        isActive: index + 1 === self.get('monthNumber') && self.get('displayedYear') === self.get('year')
       });
     });
 
     return months;
-  }.property('monthLabelsArray', 'monthNumber', 'year'),
+  }.property('monthLabelsArray', 'monthNumber', 'year', 'displayedYear'),
 
   monthText: function () {
     var monthNumber = this.get('monthNumber');

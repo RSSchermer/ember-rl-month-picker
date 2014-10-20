@@ -143,7 +143,7 @@ test('when the monthNumber is 12, increases year by one and sets monthNumber to 
   });
 });
 
-test('the current month is shown as the active active', function () {
+test('the current month is shown as the active month', function () {
   var component = this.subject();
   var $component = this.append();
 
@@ -152,7 +152,22 @@ test('the current month is shown as the active active', function () {
   });
 
   andThen(function () {
-    equal(find('li.active').text().trim(), 'Jan');
+    equal($component.find('li.active').text().trim(), 'Jan');
+  });
+});
+
+test('the current month is not shown as the active month when the displayed year does not match the year', function () {
+  var component = this.subject();
+  var $component = this.append();
+
+  Ember.run(function(){
+    component.setProperties({ 'year': 2000, 'monthNumber': 1, 'flatMode': true });
+  });
+
+  click('.previous-page-btn');
+
+  andThen(function () {
+    equal($component.find('li.active').length, 0);
   });
 });
 
@@ -165,13 +180,13 @@ test('decreases the displayed year when clicking the previous page button', func
   });
 
   andThen(function () {
-    equal(find('.year-picker-toggle-btn').text().trim(), '2000');
+    equal($component.find('.year-picker-toggle-btn').text().trim(), '2000');
   });
 
   click('.previous-page-btn');
 
   andThen(function () {
-    equal(find('.year-picker-toggle-btn').text().trim(), '1999');
+    equal($component.find('.year-picker-toggle-btn').text().trim(), '1999');
   });
 });
 
@@ -184,13 +199,13 @@ test('increases the displayed year when clicking the next page button', function
   });
 
   andThen(function () {
-    equal(find('.year-picker-toggle-btn').text().trim(), '2000');
+    equal($component.find('.year-picker-toggle-btn').text().trim(), '2000');
   });
 
   click('.next-page-btn');
 
   andThen(function () {
-    equal(find('.year-picker-toggle-btn').text().trim(), '2001');
+    equal($component.find('.year-picker-toggle-btn').text().trim(), '2001');
   });
 });
 
