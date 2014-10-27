@@ -1,3 +1,126 @@
 html, body {
   margin: 20px;
 }
+
+.rl-picker {
+  position: relative;
+}
+
+.rl-picker button {
+  border: 1px solid black;
+  margin: 0;
+  background-color: white;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.rl-picker button:hover {
+  cursor: pointer;
+  background-color: #ddd;
+}
+
+.rl-picker .buttons {
+  display: inline-block;
+  padding: 0;
+}
+
+.rl-picker .buttons button {
+  float: left;
+}
+
+.rl-picker .decrease-btn {
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.rl-picker .increase-btn {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.rl-picker .picker-toggle-btn {
+  border-radius: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.rl-picker .caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top:   5px solid;
+  border-right: 5px solid transparent;
+  border-left:  2px solid transparent;
+}
+
+.rl-picker.expanded .picker-toggle-btn {
+  background-color: #ddd;
+}
+
+.rl-picker .picker {
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid black;
+  background-color: white;
+  width: 200px;
+}
+
+.rl-picker.expanded > .picker {
+  position: absolute;
+  top: 100%;
+  z-index: 999;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.rl-picker .page-controls {
+  text-align: center;
+}
+
+.rl-picker .previous-page-btn{
+  float: left;
+}
+
+.rl-picker .next-page-btn{
+  float: right;
+}
+
+.rl-picker .rl-picker .picker {
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+.rl-picker ul {
+  clear: both;
+  margin-top: 5px;
+  list-style: none;
+  padding: 0;
+  width: 200px;
+  height: 140px;
+}
+
+.rl-picker ul li {
+  display: block;
+  margin: 0;
+  float: left;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid white;
+}
+
+.rl-picker ul li:hover {
+  cursor: pointer;
+  background-color: #ddd;
+}
+
+.rl-picker ul li.active {
+  background-color: #ddd;
+}

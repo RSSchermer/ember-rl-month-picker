@@ -1,9 +1,10 @@
 import Ember from 'ember';
+import DropdownComponentMixin from 'ember-rl-dropdown/mixins/rl-dropdown-component';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(DropdownComponentMixin, {
   classNames: ['rl-month-picker', 'rl-picker'],
 
-  classNameBindings: ['isExpanded:expanded'],
+  classNameBindings: ['dropdownExpanded:expanded'],
 
   year: null,
 
@@ -27,15 +28,13 @@ export default Ember.Component.extend({
 
   displayedYear: new Date().getFullYear(),
 
-  isExpanded: false,
-
   yearPickerMode: function () {
     return !this.get('year');
   }.property(),
 
   pickerVisible: function () {
-    return this.get('flatMode') || this.get('isExpanded');
-  }.property('flatMode', 'isExpanded'),
+    return this.get('flatMode') || this.get('dropdownExpanded');
+  }.property('flatMode', 'dropdownExpanded'),
 
   monthLabelsArray: function () {
     var monthLabels = this.get('monthLabels');
@@ -101,10 +100,6 @@ export default Ember.Component.extend({
       this.sendAction('pickedMonth', this.get('year'), this.get('monthNumber'));
     },
 
-    toggleIsExpanded: function () {
-      this.set('isExpanded', !this.get('isExpanded'));
-    },
-
     previousPage: function () {
       this.set('displayedYear', this.get('displayedYear') - 1);
     },
@@ -122,39 +117,12 @@ export default Ember.Component.extend({
     },
 
     pickedMonth: function (year, monthNumber) {
-      this.setProperties({ 'year': year, 'monthNumber': monthNumber, 'isExpanded': false });
+      this.setProperties({ 'year': year, 'monthNumber': monthNumber, 'dropdownExpanded': false });
       this.sendAction('pickedMonth', year, monthNumber);
     }
   },
 
   resetCurrentPage: function () {
     this.set('displayedYear', this.get('year'));
-  }.observes('year').on('didInsertElement'),
-
-  clickoutHandler: function (event) {
-    var component = event.data.component;
-    var $target = Ember.$(event.target);
-
-    // There is an issue when the click triggered a mode change: the event target will be unloaded before this
-    // handler fires, which means the closest .picker or .picker-toggle-btn will no longer exist, so we cannot check
-    // for this. A mode change should never close the picker though, so we can check if the target still exists in
-    // the body and if not, the picker should not be closed. If anyone knows a better workaround, let me know.
-    if(component.get('isExpanded') && $target.closest('body').length !== 0 &&
-      !($target.closest('.rl-picker .picker').length || $target.closest('.rl-picker .picker-toggle-btn').length)
-    ) {
-      event.data.component.set('isExpanded', false);
-    }
-  },
-
-  manageClickoutEvent: function () {
-    if (this.get('isExpanded') && !this.get('flatMode')) {
-      Ember.$(document).bind('click', {component: this}, this.clickoutHandler);
-    } else {
-      Ember.$(document).unbind('click', this.clickoutHandler);
-    }
-  }.observes('isExpanded', 'flatMode').on('didInsertElement'),
-
-  unbindClickoutEvent: function () {
-    Ember.$(document).unbind('click', this.clickoutHandler);
-  }.on('willDestroyElement')
+  }.observes('year').on('didInsertElement')
 });
