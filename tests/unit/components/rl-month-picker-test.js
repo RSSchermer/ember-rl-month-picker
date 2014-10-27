@@ -48,7 +48,7 @@ test('closes the picker when the toggle button is clicked', function () {
   var $component = this.append();
 
   Ember.run(function(){
-    component.set('isExpanded', true);
+    component.set('dropdownExpanded', true);
   });
 
   equal($component.find('.picker').length, 1);
@@ -65,7 +65,7 @@ test('closes the picker when clicking outside', function () {
   var $component = this.append();
 
   Ember.run(function(){
-    component.set('isExpanded', true);
+    component.set('dropdownExpanded', true);
   });
 
   equal($component.find('.picker').length, 1);
