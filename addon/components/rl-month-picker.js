@@ -28,6 +28,8 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
   displayedYear: new Date().getFullYear(),
 
+  clickOutEventNamespace: 'rl-month-picker',
+
   yearPickerMode: function () {
     return !this.get('year');
   }.property(),

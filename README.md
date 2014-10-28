@@ -1,6 +1,10 @@
 # Ember-rl-month-picker
 
-Ember month picker component. See also:
+Ember month picker component.
+
+[![Build Status](https://travis-ci.org/RSSchermer/ember-rl-month-picker.svg?branch=master)](https://travis-ci.org/RSSchermer/ember-rl-month-picker)
+
+See also:
 
 * [ember-rl-year-picker](https://github.com/RSSchermer/ember-rl-year-picker)
 
