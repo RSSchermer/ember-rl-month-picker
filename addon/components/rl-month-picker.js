@@ -101,11 +101,11 @@ export default Ember.Component.extend(DropdownComponentMixin, {
     },
 
     previousPage: function () {
-      this.set('displayedYear', this.get('displayedYear') - 1);
+      this.decrementProperty('displayedYear');
     },
 
     nextPage: function () {
-      this.set('displayedYear', this.get('displayedYear') + 1);
+      this.incrementProperty('displayedYear');
     },
 
     openYearPicker: function () {
