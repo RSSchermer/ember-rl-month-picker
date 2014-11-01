@@ -12,8 +12,6 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
   monthPlaceholderText: 'Month',
 
-  yearPlaceholderText: 'Year',
-
   monthLabels: 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec',
 
   flatMode: false,

@@ -41,9 +41,9 @@ The following properties can be set to customize the month picker:
 
 * `monthPlaceholderText` (default: 'Month'): the text displayed on the picker toggle button when the `monthNumber` value
   is null.
-* `yearPlaceholderText` (default: 'Year'): the text displayed on the picker toggle button when the `year` value is null.
 * `flatMode` (default: false): when set to true, only the picker is shown (see demo).
-* `monthLabels` (default: 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'): the labels used for the months.
+* `monthLabels` (default: 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'): the labels used for the months, separated
+  by commas, or bound to an Ember property containing an array or strings.
 * `yearsPerPage` (default: 12): the number of years shown on a page.
 * `decreaseButtonText` (default: '<'): the text on the decrease year button. Set for example to
   `"<i class='fa fa-chevron-left'></i>"` to work with Font Awesome.

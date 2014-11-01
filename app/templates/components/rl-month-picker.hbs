@@ -21,12 +21,7 @@
       <div class='page-controls'>
         <button class='previous-page-btn' {{action 'previousPage'}}>{{previousPageButtonText}}</button>
         <button class='year-picker-toggle-btn' {{action 'openYearPicker'}}>
-          {{#if year}}
-            {{displayedYear}}
-          {{else}}
-            {{yearPlaceholderText}}
-          {{/if}}
-          <i class='caret'></i>
+          {{displayedYear}} <i class='caret'></i>
         </button>
         <button class='next-page-btn' {{action 'nextPage'}}>{{nextPageButtonText}}</button>
       </div>
