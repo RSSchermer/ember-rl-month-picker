@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "ember-rl-dropdown": "0.0.3",
-    "ember-rl-year-picker": "0.0.12"
+    "ember-rl-year-picker": "0.0.13"
   },
   "devDependencies": {
     "body-parser": "^1.2.0",

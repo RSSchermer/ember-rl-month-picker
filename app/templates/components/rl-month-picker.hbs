@@ -1,15 +1,15 @@
 {{#unless flatMode}}
   <div class='buttons'>
-    <button class='decrease-btn' {{action 'decreaseMonth'}}>{{decreaseButtonText}}</button>
+    <button class='decrease-btn' {{action 'decreaseMonth'}}>{{{decreaseButtonText}}}</button>
     <button class='picker-toggle-btn rl-dropdown-toggle' {{action 'toggleDropdown'}}>
       {{#if monthText}}
         {{monthText}}
       {{else}}
-        {{monthPlaceholderText}}
+        {{{monthPlaceholderText}}}
       {{/if}}
       <i class='caret'></i>
     </button>
-    <button class='increase-btn' {{action 'increaseMonth'}}>{{increaseButtonText}}</button>
+    <button class='increase-btn' {{action 'increaseMonth'}}>{{{increaseButtonText}}}</button>
   </div>
 {{/unless}}
 
@@ -19,11 +19,11 @@
       {{rl-year-picker flatMode=true previousPageButtonText=previousPageButtonText nextPageButtonText=nextPageButtonText pickedYear="pickedYear"}}
     {{else}}
       <div class='page-controls'>
-        <button class='previous-page-btn' {{action 'previousPage'}}>{{previousPageButtonText}}</button>
+        <button class='previous-page-btn' {{action 'previousPage'}}>{{{previousPageButtonText}}}</button>
         <button class='year-picker-toggle-btn' {{action 'openYearPicker'}}>
           {{displayedYear}} <i class='caret'></i>
         </button>
-        <button class='next-page-btn' {{action 'nextPage'}}>{{nextPageButtonText}}</button>
+        <button class='next-page-btn' {{action 'nextPage'}}>{{{nextPageButtonText}}}</button>
       </div>
 
       <ul class='month-list'>
