@@ -1,6 +1,6 @@
 {
   "name": "ember-rl-month-picker",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "directories": {
     "test": "tests"
   },
@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "ember-rl-dropdown": "0.0.3",
-    "ember-rl-year-picker": "0.0.11"
+    "ember-rl-year-picker": "0.0.12"
   },
   "devDependencies": {
     "body-parser": "^1.2.0",

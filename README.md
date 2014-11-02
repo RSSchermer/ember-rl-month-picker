@@ -7,6 +7,7 @@ Ember month picker component.
 See also:
 
 * [ember-rl-year-picker](https://github.com/RSSchermer/ember-rl-year-picker)
+* [ember-rl-week-picker](https://github.com/RSSchermer/ember-rl-week-picker)
 
 ## Demo
 
