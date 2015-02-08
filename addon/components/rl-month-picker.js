@@ -210,7 +210,6 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
       if (!((minMonth !== null && month < minMonth) || (maxMonth !== null && month > maxMonth))) {
         this.setProperties({ 'year': year, 'monthNumber': monthNumber, 'dropdownExpanded': false });
-        console.log(this.get('month'));
         this.sendAction('pickedMonth', year, monthNumber);
       }
     }
