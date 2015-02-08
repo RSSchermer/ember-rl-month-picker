@@ -38,7 +38,7 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
   month: function(key, value) {
     // setter
-    if (arguments.length > 1) {
+    if (arguments.length > 1 && value !== null) {
       var nameParts = value.split("-");
       this.set('year', parseInt(nameParts[0]));
       this.set('monthNumber',  parseInt(nameParts[1]));
@@ -50,7 +50,7 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
   minMonth: function(key, value) {
     // setter
-    if (arguments.length > 1) {
+    if (arguments.length > 1 && value !== null) {
       var nameParts = value.split("-");
       this.set('minYear', parseInt(nameParts[0]));
       this.set('minMonthNumber',  parseInt(nameParts[1]));
@@ -62,7 +62,7 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
   maxMonth: function(key, value) {
     // setter
-    if (arguments.length > 1) {
+    if (arguments.length > 1 && value !== null) {
       var nameParts = value.split("-");
       this.set('maxYear', parseInt(nameParts[0]));
       this.set('maxMonthNumber',  parseInt(nameParts[1]));
