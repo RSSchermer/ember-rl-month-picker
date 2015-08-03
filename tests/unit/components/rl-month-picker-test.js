@@ -7,315 +7,258 @@ var App;
 moduleForComponent('rl-month-picker', 'RlMonthPickerComponent', {
   needs: ['component:rl-year-picker'],
 
-  setup: function() {
+  setup: function () {
     App = startApp();
   },
 
-  teardown: function() {
+  teardown: function () {
     Ember.run(App, 'destroy');
   }
 });
 
-test('does not show a picker when not in flatMode and not expanded', function () {
-  var $component = this.append();
-
-  equal($component.find('.picker').length, 0);
+test('does not show a picker when not in flatMode and not expanded', function (assert) {
+  assert.equal(this.$().find('.picker').length, 0);
 });
 
-test('does show a picker when not in flatMode and expanded', function () {
-  var $component = this.append();
+test('does show a picker when not in flatMode and expanded', function (assert) {
+  this.$().find('.picker-toggle-btn').click();
 
-  click('.picker-toggle-btn');
-
-  andThen(function () {
-    equal($component.find('.picker').length, 1);
-  });
+  assert.equal(this.$().find('.picker').length, 1);
 });
 
-test('does show a picker when in flatMode', function () {
+test('does show a picker when in flatMode', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
-  Ember.run(function(){
+  Ember.run(function () {
     component.set('flatMode', true);
   });
 
-  equal($component.find('.picker').length, 1);
+  assert.equal(this.$().find('.picker').length, 1);
 });
 
-test('closes the picker when the toggle button is clicked', function () {
+test('closes the picker when the toggle button is clicked', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
-  Ember.run(function(){
+  Ember.run(function () {
     component.set('dropdownExpanded', true);
   });
 
-  equal($component.find('.picker').length, 1);
+  assert.equal(this.$().find('.picker').length, 1);
 
-  click('.picker-toggle-btn');
+  this.$().find('.picker-toggle-btn').click();
 
-  andThen(function () {
-    equal($component.find('.picker').length, 0);
-  });
+  assert.equal(this.$().find('.picker').length, 0);
 });
 
-test('closes the picker when clicking outside', function () {
+test('closes the picker when clicking outside', function (assert) {
   var component = this.subject();
-  var $component = this.append();
+  var $component = this.$();
 
-  Ember.run(function(){
+  Ember.run(function () {
     component.set('dropdownExpanded', true);
   });
 
-  equal($component.find('.picker').length, 1);
+  assert.equal($component.find('.picker').length, 1);
 
-  Ember.$($component).parent().append('<div id="clickout-test-element"></div>');
+  $component.parent().append('<div id="clickout-test-element"></div>');
 
-  click('#clickout-test-element');
+  Ember.run.later(function () {
+    $component.parent().find('#clickout-test-element').click();
 
-  andThen(function () {
-    equal($component.find('.picker').length, 0);
-  });
+    Ember.run.later(function () {
+      assert.equal($component.find('.picker').length, 0);
+    }, 2);
+  }, 2);
 });
 
-test('decrease month button decreases the monthNumber by 1', function () {
+test('decrease month button decreases the monthNumber by 1', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
-  Ember.run(function(){
+  Ember.run(function () {
     component.setProperties({ 'year': 2000, 'monthNumber': 5 });
   });
 
-  click('.decrease-btn');
+  this.$().find('.decrease-btn').click();
 
-  andThen(function () {
-    equal(component.get('year'), 2000);
-    equal(component.get('monthNumber'), 4);
-  });
+  assert.equal(component.get('year'), 2000);
+  assert.equal(component.get('monthNumber'), 4);
 });
 
-test('when the monthNumber is one, decreases year by one and sets monthNumber to 12', function () {
+test('when the monthNumber is one, decreases year by one and sets monthNumber to 12', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
-  Ember.run(function(){
+  Ember.run(function () {
     component.setProperties({ 'year': 2000, 'monthNumber': 1 });
   });
 
-  click('.decrease-btn');
+  this.$().find('.decrease-btn').click();
 
-  andThen(function () {
-    equal(component.get('year'), 1999);
-    equal(component.get('monthNumber'), 12);
-  });
+  assert.equal(component.get('year'), 1999);
+  assert.equal(component.get('monthNumber'), 12);
 });
 
-test('increase month button increases the monthNumber by 1', function () {
+test('increase month button increases the monthNumber by 1', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
-  Ember.run(function(){
+  Ember.run(function () {
     component.setProperties({ 'year': 2000, 'monthNumber': 5 });
   });
 
-  click('.increase-btn');
+  this.$().find('.increase-btn').click();
 
-  andThen(function () {
-    equal(component.get('year'), 2000);
-    equal(component.get('monthNumber'), 6);
-  });
+  assert.equal(component.get('year'), 2000);
+  assert.equal(component.get('monthNumber'), 6);
 });
 
-test('when the monthNumber is 12, increases year by one and sets monthNumber to 1', function () {
+test('when the monthNumber is 12, increases year by one and sets monthNumber to 1', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
-  Ember.run(function(){
+  Ember.run(function () {
     component.setProperties({ 'year': 2000, 'monthNumber': 12 });
   });
 
-  click('.increase-btn');
+  this.$().find('.increase-btn').click();
 
-  andThen(function () {
-    equal(component.get('year'), 2001);
-    equal(component.get('monthNumber'), 1);
-  });
+  assert.equal(component.get('year'), 2001);
+  assert.equal(component.get('monthNumber'), 1);
 });
 
-test('the current month is shown as the active month', function () {
+test('the current month is shown as the active month', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
-  Ember.run(function(){
+  Ember.run(function () {
     component.setProperties({ 'year': 2000, 'monthNumber': 1, 'flatMode': true });
   });
 
-  andThen(function () {
-    equal($component.find('li.active').text().trim(), 'Jan');
-  });
+  assert.equal(this.$().find('li.active').text().trim(), 'Jan');
 });
 
-test('the current month is not shown as the active month when the displayed year does not match the year', function () {
+test('the current month is not shown as the active month when the displayed year does not match the year', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
-  Ember.run(function(){
+  Ember.run(function () {
     component.setProperties({ 'year': 2000, 'monthNumber': 1, 'flatMode': true });
   });
 
-  click('.previous-page-btn');
+  this.$().find('.previous-page-btn').click();
 
-  andThen(function () {
-    equal($component.find('li.active').length, 0);
-  });
+  assert.equal(this.$().find('li.active').length, 0);
 });
 
-test('decreases the displayed year when clicking the previous page button', function () {
+test('decreases the displayed year when clicking the previous page button', function (assert) {
   var component = this.subject();
-  var $component = this.append();
+
+  Ember.run(function () {
+    component.setProperties({ 'year': 2000, 'flatMode': true });
+  });
+
+  assert.equal(this.$().find('.year-picker-toggle-btn').text().trim(), '2000');
+
+  this.$().find('.previous-page-btn').click();
+
+  assert.equal(this.$().find('.year-picker-toggle-btn').text().trim(), '1999');
+});
+
+test('increases the displayed year when clicking the next page button', function (assert) {
+  var component = this.subject();
 
   Ember.run(function(){
     component.setProperties({ 'year': 2000, 'flatMode': true });
   });
 
-  andThen(function () {
-    equal($component.find('.year-picker-toggle-btn').text().trim(), '2000');
-  });
+  assert.equal(this.$().find('.year-picker-toggle-btn').text().trim(), '2000');
 
-  click('.previous-page-btn');
+  this.$().find('.next-page-btn').click();
 
-  andThen(function () {
-    equal($component.find('.year-picker-toggle-btn').text().trim(), '1999');
-  });
+  assert.equal(this.$().find('.year-picker-toggle-btn').text().trim(), '2001');
 });
 
-test('increases the displayed year when clicking the next page button', function () {
+test('uses the displayed year as the new year when selecting a month on that page', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
   Ember.run(function(){
     component.setProperties({ 'year': 2000, 'flatMode': true });
   });
 
-  andThen(function () {
-    equal($component.find('.year-picker-toggle-btn').text().trim(), '2000');
-  });
+  this.$().find('.next-page-btn').click();
+  this.$().find('.picker li:first-of-type').click();
 
-  click('.next-page-btn');
-
-  andThen(function () {
-    equal($component.find('.year-picker-toggle-btn').text().trim(), '2001');
-  });
+  assert.equal(component.get('monthNumber'), 1);
+  assert.equal(component.get('year'), '2001');
 });
 
-test('uses the displayed year as the new year when selecting a month on that page', function () {
+test('a month is can not be selected when it is smaller than the minMonth specified', function (assert) {
   var component = this.subject();
-  var $component = this.append();
-
-  Ember.run(function(){
-    component.setProperties({ 'year': 2000, 'flatMode': true });
-  });
-
-  click('.next-page-btn');
-  click('.picker li:first-of-type');
-
-  andThen(function () {
-    equal(component.get('monthNumber'), 1);
-    equal(component.get('year'), '2001');
-  });
-});
-
-test('a month is can not be selected when it is smaller than the minMonth specified', function () {
-  var component = this.subject();
-  var $component = this.append();
 
   Ember.run(function(){
     component.setProperties({ 'year': 2000, 'monthNumber': 4, 'flatMode': true, 'minMonth': "2000-4" });
   });
 
-  click('li:contains("Mar")');
+  this.$().find('li:contains("Mar")').click();
 
-  andThen(function () {
-    equal(component.get('year'), 2000);
-    equal(component.get('monthNumber'), 4);
-  });
+  assert.equal(component.get('year'), 2000);
+  assert.equal(component.get('monthNumber'), 4);
 });
 
-test('the decrease month button is disabled when the current month <= the minMonth specified', function () {
+test('the decrease month button is disabled when the current month <= the minMonth specified', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
   Ember.run(function(){
     component.setProperties({ 'year': 1998, 'monthNumber': 2, 'minMonth': "1998-2" });
   });
 
-  click('.decrease-btn');
+  this.$().find('.decrease-btn').click();
 
-  andThen(function () {
-    equal(component.get('year'), 1998);
-    equal(component.get('monthNumber'), 2);
-  });
+  assert.equal(component.get('year'), 1998);
+  assert.equal(component.get('monthNumber'), 2);
 });
 
-test('the previous page button is disabled when the last month on the previous page < the minMonth specified', function () {
+test('the previous page button is disabled when the last month on the previous page < the minMonth specified', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
   Ember.run(function(){
     component.setProperties({ 'year': 2000, 'flatMode': true, 'minMonth': '2000-1' });
   });
 
-  click('.previous-page-btn');
+  this.$().find('.previous-page-btn').click();
 
-  andThen(function () {
-    equal($component.find('.year-picker-toggle-btn').text().trim(), '2000');
-  });
+  assert.equal(this.$().find('.year-picker-toggle-btn').text().trim(), '2000');
 });
 
-test('a month is can not be selected when it is greater than the maxMonth specified', function () {
+test('a month is can not be selected when it is greater than the maxMonth specified', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
   Ember.run(function(){
     component.setProperties({ 'year': 2000, 'monthNumber': 4, 'flatMode': true, 'maxMonth': "2000-4" });
   });
 
-  click('li:contains("May")');
+  this.$().find('li:contains("May")').click();
 
-  andThen(function () {
-    equal(component.get('year'), 2000);
-    equal(component.get('monthNumber'), 4);
-  });
+  assert.equal(component.get('year'), 2000);
+  assert.equal(component.get('monthNumber'), 4);
 });
 
-test('the increase month button is disabled when the current month >= the maxMonth specified', function () {
+test('the increase month button is disabled when the current month >= the maxMonth specified', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
   Ember.run(function(){
     component.setProperties({ 'year': 1998, 'monthNumber': 2, 'maxMonth': "1998-2" });
   });
 
-  click('.increase-btn');
+  this.$().find('.increase-btn').click();
 
-  andThen(function () {
-    equal(component.get('year'), 1998);
-    equal(component.get('monthNumber'), 2);
-  });
+  assert.equal(component.get('year'), 1998);
+  assert.equal(component.get('monthNumber'), 2);
 });
 
-test('the next page button is disabled when the first month on the next page > the maxMonth specified', function () {
+test('the next page button is disabled when the first month on the next page > the maxMonth specified', function (assert) {
   var component = this.subject();
-  var $component = this.append();
 
   Ember.run(function(){
     component.setProperties({ 'year': 2000, 'flatMode': true, 'maxMonth': '2000-12' });
   });
 
-  click('.next-page-btn');
+  this.$().find('.next-page-btn').click();
 
-  andThen(function () {
-    equal($component.find('.year-picker-toggle-btn').text().trim(), '2000');
-  });
+  assert.equal(this.$().find('.year-picker-toggle-btn').text().trim(), '2000');
 });

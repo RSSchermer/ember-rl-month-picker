@@ -36,73 +36,97 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
   clickOutEventNamespace: 'rl-month-picker',
 
-  month: function(key, value) {
-    // setter
-    if (arguments.length > 1 && value !== null) {
-      var nameParts = value.split("-");
-      this.set('year', parseInt(nameParts[0]));
-      this.set('monthNumber',  parseInt(nameParts[1]));
+  month: Ember.computed('year', 'monthNumber', {
+    get: function () {
+      return this.buildMonthString(this.get('year'), this.get('monthNumber'));
+    },
+
+    set: function(key, monthString) {
+      if (monthString !== null) {
+        var parts = monthString.split("-");
+        var year = parseInt(parts[0]);
+        var monthNumber = parseInt(parts[1]);
+
+        this.setProperties({ 'year': year, 'monthNumber': monthNumber });
+
+        return this.buildMonthString(year, monthNumber);
+      }
+
+      return null;
     }
+  }),
 
-    // getter
-    return this.buildMonthString(this.get('year'), this.get('monthNumber'));
-  }.property('year', 'monthNumber'),
+  minMonth: Ember.computed('minYear', 'minMonthNumber', {
+    get: function () {
+      return this.buildMonthString(this.get('minYear'), this.get('minMonthNumber'));
+    },
 
-  minMonth: function(key, value) {
-    // setter
-    if (arguments.length > 1 && value !== null) {
-      var nameParts = value.split("-");
-      this.set('minYear', parseInt(nameParts[0]));
-      this.set('minMonthNumber',  parseInt(nameParts[1]));
+    set: function(key, monthString) {
+      if (monthString !== null) {
+        var parts = monthString.split("-");
+        var year = parseInt(parts[0]);
+        var monthNumber = parseInt(parts[1]);
+
+        this.setProperties({ 'minYear': year, 'minMonthNumber': monthNumber });
+
+        return this.buildMonthString(year, monthNumber);
+      }
+
+      return null;
     }
+  }),
 
-    // getter
-    return this.buildMonthString(this.get('minYear'), this.get('minMonthNumber'));
-  }.property('minYear', 'minMonthNumber'),
+  maxMonth: Ember.computed('maxYear', 'maxMonthNumber', {
+    get: function () {
+      return this.buildMonthString(this.get('maxYear'), this.get('maxMonthNumber'));
+    },
 
-  maxMonth: function(key, value) {
-    // setter
-    if (arguments.length > 1 && value !== null) {
-      var nameParts = value.split("-");
-      this.set('maxYear', parseInt(nameParts[0]));
-      this.set('maxMonthNumber',  parseInt(nameParts[1]));
+    set: function(key, monthString)  {
+      if (monthString !== null) {
+        var parts = monthString.split("-");
+        var year = parseInt(parts[0]);
+        var monthNumber = parseInt(parts[1]);
+
+        this.setProperties({ 'maxYear': year, 'maxMonthNumber': monthNumber });
+
+        return this.buildMonthString(year, monthNumber);
+      }
+
+      return null;
     }
+  }),
 
-    // getter
-    return this.buildMonthString(this.get('maxYear'), this.get('maxMonthNumber'));
-  }.property('maxYear', 'maxMonthNumber'),
-
-  yearPickerMode: function () {
+  yearPickerMode: Ember.computed(function () {
     return !this.get('year');
-  }.property(),
+  }),
 
-  pickerVisible: function () {
+  pickerVisible: Ember.computed('flatMode', 'dropdownExpanded', function () {
     return this.get('flatMode') || this.get('dropdownExpanded');
-  }.property('flatMode', 'dropdownExpanded'),
+  }),
 
-  monthLabelsArray: function () {
+  monthLabelsArray: Ember.computed('monthLabels', function () {
     var monthLabels = this.get('monthLabels');
 
-    return typeof monthLabels === 'string' ? monthLabels.split(',') : monthLabels;
-  }.property('monthLabels'),
+    return typeof monthLabels === 'string' ? Ember.A(monthLabels.split(',')) : Ember.A(monthLabels);
+  }),
 
-  decreaseMonthButtonDisabled: function () {
+  decreaseMonthButtonDisabled: Ember.computed('month', 'minMonth', function () {
     var minMonth = this.get('minMonth');
     var date = new Date();
     var month = this.get('month') || date.getFullYear() +'-'+ (date.getMonth() + 1);
 
     return minMonth !== null && month <= minMonth;
-  }.property('month', 'minMonth'),
+  }),
 
-  increaseMonthButtonDisabled: function () {
+  increaseMonthButtonDisabled: Ember.computed('month', 'maxMonth', function () {
     var maxMonth = this.get('maxMonth');
     var date = new Date();
     var month = this.get('month') || date.getFullYear() +'-'+ (date.getMonth() + 1);
 
     return maxMonth !== null && month >= maxMonth;
-  }.property('month', 'maxMonth'),
+  }),
 
-  months: function () {
+  months: Ember.computed('monthLabelsArray', 'monthNumber', 'year', 'displayedYear', 'minMonth', 'maxMonth', function () {
     var self = this;
     var months = [];
     var monthLabels = this.get('monthLabelsArray');
@@ -124,22 +148,22 @@ export default Ember.Component.extend(DropdownComponentMixin, {
       });
     });
 
-    return months;
-  }.property('monthLabelsArray', 'monthNumber', 'year', 'displayedYear', 'minMonth', 'maxMonth'),
+    return Ember.A(months);
+  }),
 
-  previousPageButtonDisabled: function () {
+  previousPageButtonDisabled: Ember.computed('displayedYear', 'minMonth', function () {
     var minMonth = this.get('minMonth');
 
     return minMonth !== null && ((this.get('displayedYear') - 1).toString() +'-12') < minMonth;
-  }.property('displayedYear', 'minMonth'),
+  }),
 
-  nextPageButtonDisabled: function () {
+  nextPageButtonDisabled: Ember.computed('displayedYear', 'maxMonth', function () {
     var maxMonth = this.get('maxMonth');
 
     return maxMonth !== null && ((this.get('displayedYear') + 1).toString() +'-01') > maxMonth;
-  }.property('displayedYear', 'maxMonth'),
+  }),
 
-  monthText: function () {
+  monthText: Ember.computed('monthNumber', 'year', 'monthLabelsArray', function () {
     var monthNumber = this.get('monthNumber');
     var year = this.get('year');
 
@@ -148,7 +172,7 @@ export default Ember.Component.extend(DropdownComponentMixin, {
     } else {
       return null;
     }
-  }.property('monthNumber', 'year', 'monthLabelsArray'),
+  }),
 
   actions: {
     decreaseMonth: function () {
@@ -215,9 +239,9 @@ export default Ember.Component.extend(DropdownComponentMixin, {
     }
   },
 
-  resetCurrentPage: function () {
+  resetCurrentPage: Ember.on('didInsertElement', Ember.observer('year', function () {
     this.set('displayedYear', this.get('year'));
-  }.observes('year').on('didInsertElement'),
+  })),
 
   buildMonthString: function (year, monthNumber) {
     if (year === null || monthNumber === null) {

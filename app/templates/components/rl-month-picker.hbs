@@ -1,6 +1,6 @@
 {{#unless flatMode}}
   <div class='buttons'>
-    <button class='decrease-btn' {{action 'decreaseMonth'}} {{bind-attr disabled="decreaseMonthButtonDisabled"}}>
+    <button class='decrease-btn' {{action 'decreaseMonth'}} disabled='{{if decreaseMonthButtonDisabled "disabled"}}'>
       {{{decreaseButtonText}}}
     </button>
 
@@ -13,7 +13,7 @@
       <i class='caret'></i>
     </button>
 
-    <button class='increase-btn' {{action 'increaseMonth'}} {{bind-attr disabled="increaseMonthButtonDisabled"}}>
+    <button class='increase-btn' {{action 'increaseMonth'}} disabled='{{if increaseMonthButtonDisabled "disabled"}}'>
       {{{increaseButtonText}}}
     </button>
   </div>
@@ -25,7 +25,7 @@
       {{rl-year-picker flatMode=true year=year previousPageButtonText=previousPageButtonText nextPageButtonText=nextPageButtonText pickedYear="pickedYear" minYear=minYear maxYear=maxYear}}
     {{else}}
       <div class='page-controls'>
-        <button class='previous-page-btn' {{action 'previousPage'}} {{bind-attr disabled="previousPageButtonDisabled"}}>
+        <button class='previous-page-btn' {{action 'previousPage'}} disabled='{{if previousPageButtonDisabled "disabled"}}'>
           {{{previousPageButtonText}}}
         </button>
 
@@ -33,14 +33,14 @@
           {{displayedYear}} <i class='caret'></i>
         </button>
 
-        <button class='next-page-btn' {{action 'nextPage'}} {{bind-attr disabled="nextPageButtonDisabled"}}>
+        <button class='next-page-btn' {{action 'nextPage'}} disabled='{{if nextPageButtonDisabled "disabled"}}'>
           {{{nextPageButtonText}}}
         </button>
       </div>
 
       <ul class='month-list'>
-        {{#each month in months}}
-          <li {{bind-attr class="month.isActive:active month.outOfRange:out-of-range"}} {{action 'pickedMonth' displayedYear month.monthNumber}}>
+        {{#each months as |month|}}
+          <li class='{{if month.isActive "active"}} {{if month.outOfRange "out-of-range"}}' {{action 'pickedMonth' displayedYear month.monthNumber}}>
             {{month.label}}
           </li>
         {{/each}}
