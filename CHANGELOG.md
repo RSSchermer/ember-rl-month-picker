@@ -1,6 +1,10 @@
 # Ember-rl-month-picker Changelog
 
-# 0.1.0
+## 0.2.0
+
+Upgrades templates syntax to the new HTML-bars syntax, which means as of this version Ember 1.12 or higher is required.
+
+## 0.1.0
 
 Added `minMonth` and `maxMonth` options for constraining the months that can be selected by the user.
 Some css changes may be required if you want to use this functionality. Months that are not within the
