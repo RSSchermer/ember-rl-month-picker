@@ -20,6 +20,10 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
   yearPicker: true,
 
+  i18n: null,
+
+  i18n_prefix: 'months.',
+
   monthPlaceholderText: 'Month',
 
   monthLabels: 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec',
@@ -107,9 +111,18 @@ export default Ember.Component.extend(DropdownComponentMixin, {
   }),
 
   monthLabelsArray: Ember.computed('monthLabels', function () {
+    if(this.get('i18n')) {
+      var i18n = this.get('i18n');
+      var i18n_prefix = this.get('i18n_prefix');
+      return Ember.A([i18n.t(i18n_prefix + 'jan'), i18n.t(i18n_prefix + 'feb'), i18n.t(i18n_prefix + 'mar'), 
+        i18n.t(i18n_prefix + 'apr'), i18n.t(i18n_prefix + 'may'), i18n.t(i18n_prefix + 'jun'), 
+        i18n.t(i18n_prefix + 'jul'), i18n.t(i18n_prefix + 'aug'), i18n.t(i18n_prefix + 'sep'), 
+        i18n.t(i18n_prefix + 'oct'),i18n.t(i18n_prefix + 'nov'), i18n.t(i18n_prefix + 'dec')]);
+    } else {
       var monthLabels = this.get('monthLabels');
 
       return typeof monthLabels === 'string' ? Ember.A(monthLabels.split(',')) : Ember.A(monthLabels);
+    }
   }),
 
   decreaseMonthButtonDisabled: Ember.computed('month', 'minMonth', function () {
