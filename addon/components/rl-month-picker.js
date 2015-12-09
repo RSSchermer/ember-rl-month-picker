@@ -202,7 +202,7 @@ export default Ember.Component.extend(DropdownComponentMixin, {
     var year = this.get('year');
 
     if (monthNumber && year) {
-      var labelArray = useLongTitle ? 'monthLabelsLongArray' : 'monthLabelsLongArray';
+      var labelArray = this.get('useLongTitle') ? 'monthLabelsLongArray' : 'monthLabelsLongArray';
       return this.get(labelArray)[monthNumber - 1] +' '+ year;
     } else {
       return null;
