@@ -18,6 +18,8 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 
   maxYearNumber: null,
 
+  yearPicker: true,
+
   monthPlaceholderText: 'Month',
 
   monthLabels: 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec',
@@ -105,9 +107,9 @@ export default Ember.Component.extend(DropdownComponentMixin, {
   }),
 
   monthLabelsArray: Ember.computed('monthLabels', function () {
-    var monthLabels = this.get('monthLabels');
+      var monthLabels = this.get('monthLabels');
 
-    return typeof monthLabels === 'string' ? Ember.A(monthLabels.split(',')) : Ember.A(monthLabels);
+      return typeof monthLabels === 'string' ? Ember.A(monthLabels.split(',')) : Ember.A(monthLabels);
   }),
 
   decreaseMonthButtonDisabled: Ember.computed('month', 'minMonth', function () {
@@ -220,7 +222,9 @@ export default Ember.Component.extend(DropdownComponentMixin, {
     },
 
     openYearPicker: function () {
-      this.set('yearPickerMode', true);
+      if(this.get('yearPicker')){
+        this.set('yearPickerMode', true);
+      }
     },
 
     pickedYear: function (year) {
